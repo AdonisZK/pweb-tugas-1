@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Website</title>
+  </head>
+  <style>
+    .btn {
+      @apply bg-gray-200 text-2xl p-5 rounded hover:bg-gray-300 shadow-1xl;
+    }
+    .main-container {
+      background-color: #c8a2c8;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <body>
+    <main>
+      <div class="flex justify-center items-center h-screen main-container">
+        <div class="bg-white p-5 rounded shadow-2xl w-64">
+          <div
+            id="display"
+            class="h-20 bg-black text-white text-right text-4xl p-5 rounded mb-5"
+          ></div>
+          <div class="grid grid-cols-4 gap-5">
+            <button class="btn bg-gray-100">7</button>
+            <button class="btn bg-gray-100">8</button>
+            <button class="btn bg-gray-100">9</button>
+            <button class="btn bg-blue-500 text-white" id="addition">+</button>
+            <button class="btn bg-gray-100">4</button>
+            <button class="btn bg-gray-100">5</button>
+            <button class="btn bg-gray-100">6</button>
+            <button class="btn bg-blue-500 text-white" id="substraction">
+              -
+            </button>
+            <button class="btn bg-gray-100">1</button>
+            <button class="btn bg-gray-100">2</button>
+            <button class="btn bg-gray-100">3</button>
+            <button class="btn bg-blue-500 text-white" id="multiplication">
+              *
+            </button>
+            <button class="btn bg-blue-500 text-white" id="clear">C</button>
+            <button class="btn bg-gray-100">0</button>
+            <button class="btn bg-blue-500 text-white" id="equals">=</button>
+            <button class="btn bg-blue-500 text-white" id="division">/</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var operation = null;
+      var storedValue = null;
+
+      document.querySelectorAll(".btn").forEach(function (button) {
+        button.addEventListener("click", function () {
+          if (this.id === "clear") {
+            document.getElementById("display").innerText = "";
+            operation = null;
+            storedValue = null;
+          } else if (this.id === "equals") {
+            var currentValue = parseInt(
+              document.getElementById("display").innerText
+            );
+            switch (operation) {
+              case "addition":
+                document.getElementById("display").innerText =
+                  storedValue + currentValue;
+                break;
+              case "substraction":
+                document.getElementById("display").innerText =
+                  storedValue - currentValue;
+                break;
+              case "multiplication":
+                document.getElementById("display").innerText =
+                  storedValue * currentValue;
+                break;
+              case "division":
+                document.getElementById("display").innerText =
+                  storedValue / currentValue;
+                break;
+            }
+            operation = null;
+            storedValue = null;
+          } else if (
+            ["addition", "substraction", "multiplication", "division"].includes(
+              this.id
+            )
+          ) {
+            storedValue = parseInt(
+              document.getElementById("display").innerText
+            );
+            operation = this.id;
+            document.getElementById("display").innerText = "";
+          } else {
+            document.getElementById("display").innerText += this.innerText;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
